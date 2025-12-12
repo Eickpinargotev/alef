@@ -1,0 +1,11 @@
+services:
+  alef-app:
+    container_name: alef-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production

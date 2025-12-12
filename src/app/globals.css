@@ -10,6 +10,47 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-cinzel);
+  --font-display: var(--font-playfair);
+
+  /* Royal Purple (Tekhelet/Argaman) */
+  --color-lilac-50: #f4f1f8;
+  /* Very light purple/gray */
+  --color-lilac-100: #e5dde9;
+  --color-lilac-200: #d1c0da;
+  --color-lilac-300: #b99cc6;
+  --color-lilac-400: #a379b3;
+  --color-lilac-500: #8e58a0;
+  --color-lilac-600: #744288;
+  --color-lilac-700: #5e326e;
+  --color-lilac-800: #4a2656;
+  --color-lilac-900: #381d41;
+  /* Deep Royal Purple for Text/Headings */
+  --color-lilac-950: #220e29;
+  /* Almost Black Purple */
+
+  /* Gold (Zahav) - Accents */
+  --color-gold-50: #fefce8;
+  --color-gold-100: #fef9c3;
+  --color-gold-200: #fef08a;
+  --color-gold-300: #fde047;
+  --color-gold-400: #facc15;
+  --color-gold-500: #eab308;
+  --color-gold-600: #ca8a04;
+  /* Primary Gold Action */
+  --color-gold-700: #a16207;
+  --color-gold-800: #854d0e;
+  --color-gold-900: #713f12;
+  --color-gold-950: #422006;
+
+  /* keeping 'lilac' var names for now to avoid breaking build, 
+     but mapped to darker, more 'royal' tones where appropriate 
+     or just adding new ones? 
+     Wait, I should ADD 'royal' and 'gold' and then refactor usage.
+     But user wants quick improvements. Re-mapping 'lilac' to be less "pastel" 
+     and more "muted/elegant" is safer for existing non-refactored parts.
+     However, I will add EXPLICIT 'gold' vars. 
+  */
 }
 
 @media (prefers-color-scheme: dark) {
