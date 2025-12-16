@@ -169,7 +169,6 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
 
     const enterStore = () => {
         setViewState('store');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     // Filter Logic Same as Before...
@@ -340,21 +339,15 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
     );
 
     // Hash Navigation Logic
-    // Hash Navigation Logic
+    // Custom Navigation Logic
     useEffect(() => {
-        const handleHashChange = () => {
-            if (window.location.hash === '#products') {
-                setViewState('store');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+        const handleNavigation = () => {
+            setViewState('store');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        // Check on mount
-        handleHashChange();
-
-        // Listen for changes
-        window.addEventListener('hashchange', handleHashChange);
-        return () => window.removeEventListener('hashchange', handleHashChange);
+        window.addEventListener('navigate-to-store', handleNavigation);
+        return () => window.removeEventListener('navigate-to-store', handleNavigation);
     }, []);
 
     return (

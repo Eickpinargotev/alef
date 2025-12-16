@@ -25,9 +25,12 @@ export default function Header() {
 
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex space-x-8 items-center">
-                        <Link href="/#products" className="text-lilac-900 hover:text-gold-600 font-medium transition-colors tracking-wide text-sm uppercase">
+                        <button onClick={(e) => {
+                            e.preventDefault();
+                            window.dispatchEvent(new CustomEvent('navigate-to-store'));
+                        }} className="text-lilac-900 hover:text-gold-600 font-medium transition-colors tracking-wide text-sm uppercase cursor-pointer bg-transparent border-none p-0">
                             Productos
-                        </Link>
+                        </button>
                         <Link href="/faq" className="text-lilac-900 hover:text-gold-600 font-medium transition-colors tracking-wide text-sm uppercase">
                             Preguntas Frecuentes
                         </Link>
