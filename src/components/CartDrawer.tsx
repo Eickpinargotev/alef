@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { X, Trash2, Phone, CheckCircle, Copy } from 'lucide-react';
 
@@ -10,6 +10,18 @@ export default function CartDrawer() {
     const [phone, setPhone] = useState('');
     const [orderGenerated, setOrderGenerated] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    // Prevent body scroll when cart is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
