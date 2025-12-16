@@ -339,12 +339,17 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
     );
 
     // Hash Navigation Logic
+    // Scroll Reset on View Change
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [viewState]);
+
     // Navigation & History Logic
     useEffect(() => {
         // Function to update state and scroll based on target view
         const updateView = (view: 'landing' | 'store', updateHistory = false) => {
             setViewState(view);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Scroll handled by useEffect above
 
             if (updateHistory) {
                 const url = view === 'store' ? '/#products' : '/';
@@ -367,7 +372,6 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
             } else {
                 setViewState('landing');
             }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
         // Initial Check
