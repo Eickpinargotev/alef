@@ -13,7 +13,7 @@ interface CartDrawerProps {
 
 
 export default function CartDrawer({ bankImages }: CartDrawerProps) {
-    const { items, isOpen, closeCart, removeFromCart, total } = useCart();
+    const { items, isOpen, closeCart, removeFromCart, total, clearCart } = useCart();
     const [isCheckout, setIsCheckout] = useState(false);
     const [phone, setPhone] = useState('');
     const [orderGenerated, setOrderGenerated] = useState(false);
@@ -75,6 +75,7 @@ export default function CartDrawer({ bankImages }: CartDrawerProps) {
                 body: JSON.stringify(orderData)
             });
             setOrderGenerated(true);
+            clearCart();
         } catch (error) {
             console.error('Error sending order', error);
             alert('Hubo un error generando la orden. Intente de nuevo.');
