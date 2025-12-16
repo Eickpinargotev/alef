@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     }
 
     // NocoDB Base URL (matches the one used in the curl command)
-    const NOCO_BASE_URL = 'https://n8n-nocodb.hvo3jf.easypanel.host';
+    const NOCO_BASE_URL = 'http://n8n_nocodb:8080';
     const TOKEN = 'J85xPNLm5dtBtEMBYtPRbl0kNSuBzYH53P2sXTHc';
 
     try {

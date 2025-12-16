@@ -4,7 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { X, Trash2, Phone, CheckCircle, Copy } from 'lucide-react';
 
-export default function CartDrawer() {
+interface CartDrawerProps {
+    bankImages?: {
+        pichincha: string | null;
+        bolivariano: string | null;
+    };
+}
+
+
+export default function CartDrawer({ bankImages }: CartDrawerProps) {
     const { items, isOpen, closeCart, removeFromCart, total } = useCart();
     const [isCheckout, setIsCheckout] = useState(false);
     const [phone, setPhone] = useState('');
@@ -196,21 +204,37 @@ export default function CartDrawer() {
 
                                     {/* Bank Details */}
                                     <div className="space-y-4">
-                                        <div className="bg-white border border-lilac-200 p-4 rounded-xl relative group">
-                                            <h4 className="font-bold text-lilac-800">Banco Bolivariano</h4>
-                                            <p className="text-sm text-lilac-600">Ahorros</p>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <span className="font-mono bg-lilac-50 px-2 py-1 rounded text-lilac-900 select-all">5456486</span>
-                                                <button onClick={() => copyToClipboard('5456486')} className="text-lilac-400 hover:text-lilac-600"><Copy className="w-4 h-4" /></button>
+                                        <div className="bg-white border border-lilac-200 p-4 rounded-xl relative group flex gap-4 items-center">
+                                            {bankImages?.bolivariano && (
+                                                <div className="w-16 h-16 relative flex-shrink-0">
+                                                    <img src={bankImages.bolivariano} alt="Banco Bolivariano" className="w-full h-full object-contain mix-blend-multiply" />
+                                                </div>
+                                            )}
+                                            <div className="flex-1">
+                                                <h4 className="font-bold text-lilac-800">Banco Bolivariano</h4>
+                                                <p className="text-sm text-lilac-600 font-semibold">Billy Pinargote</p>
+                                                <p className="text-xs text-lilac-500">C. Ahorro: <span className="font-mono text-lilac-900 font-bold select-all">0941369770</span></p>
+                                                <p className="text-xs text-lilac-500">Cédula: <span className="font-mono text-lilac-900 font-bold select-all">0953494754</span></p>
+                                                <div className="flex items-center gap-2 mt-2">
+                                                    <button onClick={() => copyToClipboard('0941369770')} className="text-xs flex items-center gap-1 text-gold-600 hover:text-gold-700 font-bold uppercase"><Copy className="w-3 h-3" /> Copiar Banco</button>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <div className="bg-white border border-lilac-200 p-4 rounded-xl relative group">
-                                            <h4 className="font-bold text-lilac-800">Banco Pichincha</h4>
-                                            <p className="text-sm text-lilac-600">Ahorros</p>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <span className="font-mono bg-lilac-50 px-2 py-1 rounded text-lilac-900 select-all">2568679</span>
-                                                <button onClick={() => copyToClipboard('2568679')} className="text-lilac-400 hover:text-lilac-600"><Copy className="w-4 h-4" /></button>
+                                        <div className="bg-white border border-lilac-200 p-4 rounded-xl relative group flex gap-4 items-center">
+                                            {bankImages?.pichincha && (
+                                                <div className="w-16 h-16 relative flex-shrink-0">
+                                                    <img src={bankImages.pichincha} alt="Banco Pichincha" className="w-full h-full object-contain mix-blend-multiply" />
+                                                </div>
+                                            )}
+                                            <div className="flex-1">
+                                                <h4 className="font-bold text-lilac-800">Banco Pichincha</h4>
+                                                <p className="text-sm text-lilac-600 font-semibold">Billy Pinargote</p>
+                                                <p className="text-xs text-lilac-500">C. Ahorro: <span className="font-mono text-lilac-900 font-bold select-all">2208955361</span></p>
+                                                <p className="text-xs text-lilac-500">Cédula: <span className="font-mono text-lilac-900 font-bold select-all">0953494754</span></p>
+                                                <div className="flex items-center gap-2 mt-2">
+                                                    <button onClick={() => copyToClipboard('2208955361')} className="text-xs flex items-center gap-1 text-gold-600 hover:text-gold-700 font-bold uppercase"><Copy className="w-3 h-3" /> Copiar Banco</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

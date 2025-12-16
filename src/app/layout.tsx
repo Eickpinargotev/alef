@@ -35,11 +35,17 @@ export const metadata: Metadata = {
   description: "Ropa y accesorios modernos.",
 };
 
-export default function RootLayout({
+import { getBankImages } from "@/lib/productParser";
+
+// ... existing imports
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const bankImages = await getBankImages();
+
   return (
     <html lang="es" className="scroll-smooth">
       <body
@@ -48,7 +54,7 @@ export default function RootLayout({
         <CartProvider>
           <div className="flex flex-col min-h-screen">
             <Header />
-            <CartDrawer />
+            <CartDrawer bankImages={bankImages} />
             <main className="flex-grow">
               {children}
             </main>

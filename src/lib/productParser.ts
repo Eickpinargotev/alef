@@ -37,8 +37,8 @@ export interface Product {
 
 // NocoDB Config
 const NOCO_TOKEN = 'J85xPNLm5dtBtEMBYtPRbl0kNSuBzYH53P2sXTHc';
-const URL_CAMISAS = 'https://n8n-nocodb.hvo3jf.easypanel.host/api/v2/tables/mp5ukvigb8y2hnx/records?offset=0&limit=100&viewId=vwmb6wabkp5a36za';
-const URL_ARTICULOS = 'https://n8n-nocodb.hvo3jf.easypanel.host/api/v2/tables/mwrbfzn0e5e7x1y/records?offset=0&limit=100&viewId=vwejmjwe478vt03p';
+const URL_CAMISAS = 'http://n8n_nocodb:8080/api/v2/tables/mp5ukvigb8y2hnx/records?offset=0&limit=100&viewId=vwmb6wabkp5a36za';
+const URL_ARTICULOS = 'http://n8n_nocodb:8080/api/v2/tables/mwrbfzn0e5e7x1y/records?offset=0&limit=100&viewId=vwejmjwe478vt03p';
 
 async function fetchNocoData(url: string) {
   try {
@@ -199,7 +199,7 @@ export async function getProducts(): Promise<Product[]> {
   });
 }
 
-const URL_TZITZIT = 'https://n8n-nocodb.hvo3jf.easypanel.host/api/v2/tables/mpbvibjnz5kaf24/records?offset=0&limit=25&where=&viewId=vw6vav32narvatfh';
+const URL_TZITZIT = 'http://n8n_nocodb:8080/api/v2/tables/mpbvibjnz5kaf24/records?offset=0&limit=25&where=&viewId=vw6vav32narvatfh';
 
 export async function getTzitzitImage(): Promise<string | null> {
   const data = await fetchNocoData(URL_TZITZIT);
@@ -213,4 +213,22 @@ export async function getTzitzitImage(): Promise<string | null> {
     }
   }
   return null;
+}
+
+export async function getBankImages(): Promise<{ pichincha: string | null; bolivariano: string | null }> {
+  const data = await fetchNocoData(URL_TZITZIT);
+
+  const getImg = (name: string) => {
+    const record = data.find((r: any) => r.nombre === name);
+    if (record && record.imagen && Array.isArray(record.imagen) && record.imagen.length > 0) {
+      const img = record.imagen[0];
+      if (img.path) return `/api/images?path=${encodeURIComponent(img.path)}`;
+    }
+    return null;
+  };
+
+  return {
+    pichincha: getImg('banco_pichincha'),
+    bolivariano: getImg('banco_bolivariano')
+  };
 }
