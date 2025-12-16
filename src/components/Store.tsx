@@ -368,8 +368,8 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
                         <button onClick={() => setUpsellModalOpen(false)} className="absolute top-4 right-4 text-lilac-400 hover:text-lilac-600 z-10"><X className="w-6 h-6" /></button>
                         <h3 className="text-xl font-bold text-lilac-900 mb-2">¿Deseas agregar Tzitziyot?</h3>
                         <p className="text-lilac-600 mb-6">Cumple con el mandamiento agregando Tzitziyot a tu camisa por solo <span className="font-bold">$6.00</span> adicionales.</p>
-                        <div className="mb-6 rounded-xl overflow-hidden shadow-md border border-lilac-100 bg-lilac-50">
-                            <img src={tzitzitImage || "/products/camisa_tzitziyot_add.jpeg"} alt="Camisa con Tzitziyot" className="w-full h-auto mix-blend-multiply" />
+                        <div className="mb-6 rounded-xl overflow-hidden shadow-md border border-lilac-100 bg-lilac-50 flex justify-center bg-white p-4">
+                            <img src={tzitzitImage || "/products/camisa_tzitziyot_add.jpeg"} alt="Camisa con Tzitziyot" className="h-48 object-contain mix-blend-multiply" />
                         </div>
                         <div className="space-y-3">
                             <button onClick={() => finalizeAddToCart(true, pendingAddToCart.product, pendingAddToCart.variant, pendingAddToCart.isArticle)} className="w-full bg-gold-600 hover:bg-gold-700 text-white font-bold py-3 rounded-xl flex justify-center items-center gap-2"><ShoppingBag className="w-5 h-5" /> Sí, agregar (Total: ${((pendingAddToCart.product.basePrice || 0) + 6).toFixed(2)})</button>
@@ -524,7 +524,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
                                             <div className="bg-lilac-100/50 p-8 rounded-3xl border border-lilac-200 max-w-lg mx-auto">
                                                 <h3 className="text-xl font-bold text-lilac-900 mb-4">Personaliza tu Camisa</h3>
                                                 <p className="text-lilac-800 mb-6 leading-relaxed">Ponte en contacto con nosotros por WhatsApp.</p>
-                                                <a href="https://wa.me/593000000000" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-green-600 text-white font-bold py-4 px-8 rounded-xl"><Phone className="w-5 h-5" /> WhatsApp</a>
+                                                <a href="https://wa.me/593983811117" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-green-600 text-white font-bold py-4 px-8 rounded-xl"><Phone className="w-5 h-5" /> WhatsApp</a>
                                             </div>
                                         </div>
                                     ) : (

@@ -62,6 +62,9 @@ body {
 }
 
 html {
-  -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape */
+  -webkit-text-size-adjust: 100%;
+  /* Prevent font scaling in landscape */
   text-size-adjust: 100%;
+  font-size: 16px;
+  /* Explicitly set root font size to prevent browser variance (ghost zoom) */
 }
