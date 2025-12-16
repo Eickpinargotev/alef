@@ -340,21 +340,29 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
     );
 
     // Hash Navigation Logic
+    // Hash Navigation Logic
     useEffect(() => {
-        const handleHashChange = () => {
+        const checkHash = () => {
             if (window.location.hash === '#products') {
                 setViewState('store');
-                // Scroll to top of window to ensure header/filters are visible
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         };
 
         // Check on mount
-        handleHashChange();
+        checkHash();
 
         // Listen for changes
-        window.addEventListener('hashchange', handleHashChange);
-        return () => window.removeEventListener('hashchange', handleHashChange);
+        window.addEventListener('hashchange', checkHash);
+
+        // Also listen for potential pushState/replaceState if Next.js intercepts it
+        // Or if the user clicks the link when already on the hash
+        const interval = setInterval(checkHash, 500); // Polling as backup for framework interception
+
+        return () => {
+            window.removeEventListener('hashchange', checkHash);
+            clearInterval(interval);
+        };
     }, []);
 
     return (
