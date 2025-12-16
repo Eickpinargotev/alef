@@ -19,16 +19,29 @@ export default function CartDrawer({ bankImages }: CartDrawerProps) {
     const [orderGenerated, setOrderGenerated] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // Prevent body and html scroll when cart is open
+    // Reset checkout state when checking out
     useEffect(() => {
+        if (!isOpen) {
+            setIsCheckout(false);
+            setOrderGenerated(false); // Also reset order success state
+        }
+    }, [isOpen]);
+
+    // Prevent body and html scroll when cart is open
+    // Using setTimeout to avoid race conditions with other modals (like Store product modal)
+    useEffect(() => {
+        let timer: NodeJS.Timeout;
         if (isOpen) {
-            document.body.style.overflow = 'hidden';
-            document.documentElement.style.overflow = 'hidden';
+            timer = setTimeout(() => {
+                document.body.style.overflow = 'hidden';
+                document.documentElement.style.overflow = 'hidden';
+            }, 50);
         } else {
             document.body.style.overflow = 'unset';
             document.documentElement.style.overflow = 'unset';
         }
         return () => {
+            if (timer) clearTimeout(timer);
             document.body.style.overflow = 'unset';
             document.documentElement.style.overflow = 'unset';
         };
