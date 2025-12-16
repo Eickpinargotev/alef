@@ -344,9 +344,8 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
         const handleHashChange = () => {
             if (window.location.hash === '#products') {
                 setViewState('store');
-                // Optional: scroll to it
-                const el = document.getElementById('products');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                // Scroll to top of window to ensure header/filters are visible
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         };
 
@@ -524,7 +523,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
                                             <div className="bg-lilac-100/50 p-8 rounded-3xl border border-lilac-200 max-w-lg mx-auto">
                                                 <h3 className="text-xl font-bold text-lilac-900 mb-4">Personaliza tu Camisa</h3>
                                                 <p className="text-lilac-800 mb-6 leading-relaxed">Ponte en contacto con nosotros por WhatsApp.</p>
-                                                <a href="https://wa.me/593983811117" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-green-600 text-white font-bold py-4 px-8 rounded-xl"><Phone className="w-5 h-5" /> WhatsApp</a>
+                                                <a href="https://wa.me/593983811117?text=Hola!%20Me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20una%20camisa%20personalizada" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-green-600 text-white font-bold py-4 px-8 rounded-xl"><Phone className="w-5 h-5" /> WhatsApp</a>
                                             </div>
                                         </div>
                                     ) : (
