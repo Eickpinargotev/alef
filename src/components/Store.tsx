@@ -260,7 +260,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
 
     // Horizontal Configurator
     const FilterBar = () => (
-        <div className="bg-lilac-950/90 backdrop-blur-md rounded-2xl shadow-xl border border-lilac-900 p-4 sticky top-24 z-40 mb-8 mx-auto w-full">
+        <div className="bg-lilac-950/90 backdrop-blur-md rounded-2xl shadow-xl border border-lilac-900 p-4 relative z-10 mb-8 mx-auto w-full">
             <div className="flex flex-col gap-4">
 
                 {/* Top Row: Gender & Type */}
