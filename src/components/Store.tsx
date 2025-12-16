@@ -364,7 +364,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
             {upsellModalOpen && pendingAddToCart && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-lilac-950/60 backdrop-blur-sm animate-fade-in" onClick={() => setUpsellModalOpen(false)}>
                     {/* ... Upsell Content ... */}
-                    <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative" onClick={(e) => e.stopPropagation()}>
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                         <button onClick={() => setUpsellModalOpen(false)} className="absolute top-4 right-4 text-lilac-400 hover:text-lilac-600 z-10"><X className="w-6 h-6" /></button>
                         <h3 className="text-xl font-bold text-lilac-900 mb-2">¿Deseas agregar Tzitziyot?</h3>
                         <p className="text-lilac-600 mb-6">Cumple con el mandamiento agregando Tzitziyot a tu camisa por solo <span className="font-bold">$6.00</span> adicionales.</p>
@@ -382,7 +382,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
             {detailModalOpen && pendingAddToCart && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-lilac-950/60 backdrop-blur-sm animate-fade-in" onClick={() => setDetailModalOpen(false)}>
                     {/* ... Detail Content ... */}
-                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative flex flex-col gap-4" onClick={(e) => e.stopPropagation()}>
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative flex flex-col gap-4 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                         <button onClick={() => setDetailModalOpen(false)} className="absolute top-4 right-4 text-lilac-400 hover:text-lilac-600 z-10"><X className="w-6 h-6" /></button>
                         <div className="aspect-square bg-white rounded-xl overflow-hidden shadow-inner relative flex items-center justify-center p-2">
                             {pendingAddToCart.variant?.media[0]?.type === 'video' ? (
