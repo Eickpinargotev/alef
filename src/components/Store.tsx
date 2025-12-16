@@ -339,30 +339,51 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
     );
 
     // Hash Navigation Logic
-    // Custom Navigation Logic
+    // Navigation & History Logic
     useEffect(() => {
-        const handleNavigation = () => {
-            setViewState('store');
+        // Function to update state and scroll based on target view
+        const updateView = (view: 'landing' | 'store', updateHistory = false) => {
+            setViewState(view);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (updateHistory) {
+                const url = view === 'store' ? '/#products' : '/';
+                const hash = view === 'store' ? '#products' : '';
+                // Only push if different to avoid duplicate entries
+                if (window.location.hash !== hash) {
+                    window.history.pushState(null, '', url);
+                }
+            }
+        };
+
+        // Event Handlers
+        const handleNavigation = () => updateView('store', true);
+        const handleLandingNavigation = () => updateView('landing', true);
+
+        // Browser Back/Forward Button Handler
+        const handlePopState = () => {
+            if (window.location.hash === '#products') {
+                setViewState('store');
+            } else {
+                setViewState('landing');
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        // Initial Check for Hash
+        // Initial Check
         if (window.location.hash === '#products') {
             setViewState('store');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // Listeners
         window.addEventListener('navigate-to-store', handleNavigation);
-
-        const handleLandingNavigation = () => {
-            setViewState('landing');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
         window.addEventListener('navigate-to-landing', handleLandingNavigation);
+        window.addEventListener('popstate', handlePopState); // Listen for URL changes via Back button
 
         return () => {
             window.removeEventListener('navigate-to-store', handleNavigation);
             window.removeEventListener('navigate-to-landing', handleLandingNavigation);
+            window.removeEventListener('popstate', handlePopState);
         };
     }, []);
 
