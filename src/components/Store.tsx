@@ -346,6 +346,12 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
+        // Initial Check for Hash
+        if (window.location.hash === '#products') {
+            setViewState('store');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         window.addEventListener('navigate-to-store', handleNavigation);
         return () => window.removeEventListener('navigate-to-store', handleNavigation);
     }, []);
