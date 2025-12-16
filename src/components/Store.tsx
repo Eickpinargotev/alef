@@ -353,7 +353,17 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
         }
 
         window.addEventListener('navigate-to-store', handleNavigation);
-        return () => window.removeEventListener('navigate-to-store', handleNavigation);
+
+        const handleLandingNavigation = () => {
+            setViewState('landing');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        window.addEventListener('navigate-to-landing', handleLandingNavigation);
+
+        return () => {
+            window.removeEventListener('navigate-to-store', handleNavigation);
+            window.removeEventListener('navigate-to-landing', handleLandingNavigation);
+        };
     }, []);
 
     return (

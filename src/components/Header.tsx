@@ -30,9 +30,16 @@ export default function Header() {
                 <div className="flex justify-between items-center h-20">
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
-                        <Link href="/" className="text-3xl font-bold text-lilac-900 font-serif tracking-tight">
+                        <button onClick={(e) => {
+                            e.preventDefault();
+                            if (pathname === '/') {
+                                window.dispatchEvent(new CustomEvent('navigate-to-landing'));
+                            } else {
+                                router.push('/');
+                            }
+                        }} className="text-3xl font-bold text-lilac-900 font-serif tracking-tight bg-transparent border-none p-0 cursor-pointer">
                             ALEF
-                        </Link>
+                        </button>
                     </div>
 
                     {/* Desktop Nav */}
