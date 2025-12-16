@@ -238,6 +238,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
         setPendingAddToCart({ product, variant, isArticle });
         setQuantity(1);
         if (!isArticle && product.sizes?.length > 0) setSize(product.sizes[0]);
+        else if (isArticle && product.sizes?.length > 0) setSize(product.sizes[0]); // Auto-select first size for articles too
         else if (!isArticle) setSize('M');
         setDetailModalOpen(true);
     };
@@ -254,6 +255,12 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
     };
 
     const finalizeAddToCart = (withTzitziyot: boolean, product: Product, variant?: ProductVariant, isArticle = false) => {
+        // Validation: Verify size is selected if product has sizes
+        if (product.sizes && product.sizes.length > 0 && !size) {
+            alert('Por favor selecciona una talla.'); // Simple alert for now, can be UI improved
+            return;
+        }
+
         addToCart({
             productId: product.id,
             productName: isArticle ? product.name : `Camisa ${edition || variant?.edition} ${edition === 'Personalizado' ? '(Personalizado)' : ''}`,
@@ -264,7 +271,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
                 edition: edition || variant?.edition || undefined,
                 model: model || variant?.model || undefined,
                 color: color || variant?.color || undefined,
-                size: isArticle ? undefined : size,
+                size: size, // Always pass size if selected
                 tzitziyot: isArticle ? undefined : withTzitziyot,
                 gender: gender!,
             },
