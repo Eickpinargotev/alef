@@ -10,6 +10,25 @@ interface StoreProps {
     tzitzitImage: string | null;
 }
 
+const colorMap: Record<string, string> = {
+    'blanco': '#FFFFFF',
+    'negro': '#000000',
+    'azul_marino': '#0f172a', // Navy blue (slate-900 like)
+    'azul_cielo': '#38bdf8', // Sky blue
+    'celeste': '#bae6fd',
+    'gris': '#6b7280',
+    'beige': '#f5f5dc',
+    'crema': '#fef3c7',
+    'cafe': '#78350f',
+    'verde_oliva': '#556b2f',
+    'verde_militar': '#4b5320',
+    'vino': '#722f37',
+    'concho_de_vino': '#58111a',
+    'palo_de_rosa': '#e7accf',
+    'blanco_hueso': '#eaddcf', // Bone white
+    'lila': '#c084fc'
+};
+
 export default function Store({ products, tzitzitImage }: StoreProps) {
     const { addToCart } = useCart();
 
@@ -323,12 +342,24 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
                             <>
                                 <div className="w-px h-8 bg-lilac-800 hidden sm:block"></div>
                                 <div className="flex flex-wrap gap-2 items-center justify-center">
-                                    {availableColors.map(c => (
-                                        <button key={c} onClick={() => handleColorChange(c)} title={c} className={`w-8 h-8 rounded-full border-2 shadow-sm transition-all hover:scale-110 flex items-center justify-center ${viewColor === c ? 'ring-2 ring-offset-2 ring-offset-lilac-900 ring-gold-500 scale-110 border-white' : 'border-lilac-700 opacity-80 hover:opacity-100'}`} style={{ backgroundColor: c === 'blanco' ? '#fff' : c === 'negro' ? '#000' : c === 'blanco_hueso' ? '#F5F5DC' : c === 'verde_oliva' ? '#556B2F' : c === 'beige' ? '#F5F5DC' : c }}>
-                                            {(c === 'blanco' || c === 'blanco_hueso') && viewColor === c && <Check className="w-4 h-4 text-black" />}
-                                            {(c !== 'blanco' && c !== 'blanco_hueso') && viewColor === c && <Check className="w-4 h-4 text-white" />}
-                                        </button>
-                                    ))}
+                                    {availableColors.map(c => {
+                                        const bgColor = colorMap[c] || c;
+                                        const isLight = ['blanco', 'blanco_hueso', 'beige', 'crema', 'celeste', 'palo_de_rosa'].includes(c);
+                                        return (
+                                            <div key={c} className="flex flex-col items-center gap-1 group/color">
+                                                <button
+                                                    onClick={() => handleColorChange(c)}
+                                                    className={`w-8 h-8 rounded-full border-2 shadow-sm transition-all hover:scale-110 flex items-center justify-center relative ${viewColor === c ? 'ring-2 ring-offset-2 ring-offset-lilac-900 ring-gold-500 scale-110 border-white' : 'border-lilac-700 opacity-80 hover:opacity-100'}`}
+                                                    style={{ backgroundColor: bgColor }}
+                                                >
+                                                    {viewColor === c && <Check className={`w-4 h-4 ${isLight ? 'text-black' : 'text-white'}`} />}
+                                                </button>
+                                                <span className="text-[10px] text-lilac-300 font-medium opacity-0 group-hover/color:opacity-100 transition-opacity absolute -bottom-5 whitespace-nowrap bg-lilac-900 px-1 rounded">
+                                                    {c.replace(/_/g, ' ')}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </>
                         )}
