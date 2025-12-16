@@ -19,15 +19,18 @@ export default function CartDrawer({ bankImages }: CartDrawerProps) {
     const [orderGenerated, setOrderGenerated] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    // Prevent body scroll when cart is open
+    // Prevent body and html scroll when cart is open
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
         }
         return () => {
             document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
         };
     }, [isOpen]);
 
@@ -73,8 +76,8 @@ export default function CartDrawer({ bankImages }: CartDrawerProps) {
     };
 
     return (
-        <div className="fixed inset-0 z-[70] overflow-hidden">
-            <div className="absolute inset-0 bg-lilac-950/50 backdrop-blur-sm" onClick={closeCart} />
+        <div className="fixed inset-0 z-[70] overflow-hidden overscroll-contain">
+            <div className="absolute inset-0 bg-lilac-950/50 backdrop-blur-sm touch-none" onClick={closeCart} />
 
             <div className="absolute inset-y-0 right-0 max-w-md w-full flex">
                 <div className="w-full h-full bg-white shadow-2xl flex flex-col animate-slide-in-right">
