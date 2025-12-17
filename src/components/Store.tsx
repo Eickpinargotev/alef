@@ -35,7 +35,7 @@ const editionContent: Record<string, { trans: string; spanish: string; verse: st
         trans: "Halo tzivitija jazak ve'ematz...",
         spanish: 'Mira que te mando que te esfuerces y seas valiente...'
     },
-    'Shema Israel': {
+    'Shemah Israel': {
         verse: '📖 Deuteronomio 6:4',
         trans: "Shemá Yisra'él Adonái Elohéinu Adonái Ejád.",
         spanish: 'Escucha, Israel: El Señor nuestro Dios, el Señor uno es.'
@@ -482,7 +482,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
                         <div className="flex flex-col gap-2">
                             <h3 className="text-2xl font-bold text-lilac-900 capitalize mb-1">{pendingAddToCart.product.name}</h3>
                             <p className="text-xl font-bold text-gold-600">${pendingAddToCart.variant?.price.toFixed(2)}</p>
-                            {pendingAddToCart.product.description && <p className="text-sm text-lilac-600 bg-lilac-50 p-2 rounded-lg">{pendingAddToCart.product.description}</p>}
+                            {pendingAddToCart.product.description && <p className="text-sm text-lilac-600 bg-lilac-50 p-2 rounded-lg whitespace-pre-line">{pendingAddToCart.product.description}</p>}
                         </div>
                         {((pendingAddToCart.product.sizes && pendingAddToCart.product.sizes.length > 0) || !pendingAddToCart.isArticle) && (
                             <div className="flex flex-col gap-1">
