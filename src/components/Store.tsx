@@ -29,6 +29,19 @@ const colorMap: Record<string, string> = {
     'lila': '#c084fc'
 };
 
+const editionContent: Record<string, { trans: string; spanish: string; verse: string }> = {
+    'Jazak Ve Ematz': {
+        verse: '📖 Josué 1:9',
+        trans: "Halo tzivitija jazak ve'ematz...",
+        spanish: 'Mira que te mando que te esfuerces y seas valiente...'
+    },
+    'Shema Israel': {
+        verse: '📖 Deuteronomio 6:4',
+        trans: "Shemá Yisra'él Adonái Elohéinu Adonái Ejád.",
+        spanish: 'Escucha, Israel: El Señor nuestro Dios, el Señor uno es.'
+    }
+};
+
 export default function Store({ products, tzitzitImage }: StoreProps) {
     const { addToCart } = useCart();
 
@@ -304,7 +317,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
                         <div className="flex gap-2">
                             {availableTypes.map(t => (
                                 <button key={t} onClick={() => handleTypeChange(t)} className={`px-4 py-2 rounded-full text-sm font-bold uppercase tracking-widest transition-all ${productType === t ? 'bg-gold-500 text-white shadow-lg shadow-gold-500/30' : 'bg-lilac-900/50 text-lilac-400 border border-lilac-700 hover:border-lilac-500'}`}>
-                                    {t === 'camisa' ? 'Camisas' : 'Artículos'}
+                                    {t === 'camisa' ? 'Camisetas' : 'Artículos'}
                                 </button>
                             ))}
                         </div>
@@ -517,7 +530,7 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
                             Es la fusión entre la tradición milenaria y la estética contemporánea.
                         </p>
                         <p>
-                            Nuestra misión es crear prendas que honren nuestra identidad judía con un diseño moderno,
+                            Nuestra misión es crear prendas que honren nuestra identidad israelita con un diseño moderno,
                             elegante y con propósito espiritual, llevando la santidad a la vida cotidiana.
                         </p>
                     </div>
@@ -572,26 +585,68 @@ export default function Store({ products, tzitzitImage }: StoreProps) {
 
                         {/* Shirts Grid */}
                         {productType === 'camisa' && (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-32">
-                                {(displayedMedia as any[]).map((media, idx) => (
-                                    <div key={idx} onClick={() => {
-                                        if (media.variant && productType === 'camisa') {
-                                            if (media.variant.edition) setEdition(media.variant.edition);
-                                            if (media.variant.model) setModel(media.variant.model);
-                                            if (media.variant.color) setColor(media.variant.color);
-                                            const parentProduct = products.find(p => p.variants && p.variants.some(v => v === media.variant));
-                                            if (parentProduct) openDetailModal(parentProduct, media.variant, false);
-                                        }
-                                    }} className={`rounded-2xl overflow-hidden shadow-sm border bg-white cursor-pointer transition-all hover:shadow-md group ${media.variant?.model === model && media.variant?.color === color ? 'ring-2 ring-lilac-500 border-transparent' : 'border-lilac-100'}`}>
-                                        <div className="relative aspect-[3/4] overflow-hidden">
-                                            {media.type === 'video' ? (
-                                                <video src={media.src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" controls playsInline />
-                                            ) : (
-                                                <img src={media.src} alt="Vista previa" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                            )}
-                                        </div>
-                                    </div>
-                                ))}
+                            <div className="flex flex-col gap-16 mb-32">
+                                {(() => {
+                                    // Group displayed media by edition
+                                    const groupedMedia: Record<string, any[]> = {};
+                                    (displayedMedia as any[]).forEach(media => {
+                                        const editionName = media.variant?.edition?.replace(/_/g, ' ') || 'Otros';
+                                        if (!groupedMedia[editionName]) groupedMedia[editionName] = [];
+                                        groupedMedia[editionName].push(media);
+                                    });
+
+                                    const editionsToShow = viewEdition && viewEdition !== 'Personalizado'
+                                        ? [viewEdition.replace(/_/g, ' ')]
+                                        : Object.keys(groupedMedia).sort();
+
+                                    return editionsToShow.map(editionName => {
+                                        const mediaList = groupedMedia[editionName];
+                                        if (!mediaList || mediaList.length === 0) return null;
+
+                                        const content = editionContent[editionName];
+
+                                        return (
+                                            <div key={editionName} className="animate-fade-in">
+                                                {/* Header for Edition */}
+                                                <div className="mb-8 text-center">
+                                                    <h2 className="text-3xl font-serif font-bold text-lilac-950 mb-4">{editionName}</h2>
+                                                    {content && (
+                                                        <div className="max-w-2xl mx-auto bg-white/50 backdrop-blur-sm p-6 rounded-2xl border border-lilac-100 shadow-sm">
+                                                            <p className="font-bold text-gold-600 text-lg mb-2">{content.verse}</p>
+                                                            <div className="text-lilac-800 space-y-2 font-medium">
+                                                                <p><span className="text-lilac-500 text-xs uppercase tracking-widest block mb-1">Transliteración</span><span className="italic">"{content.trans}"</span></p>
+                                                                <p><span className="text-lilac-500 text-xs uppercase tracking-widest block mb-1">Español</span>"{content.spanish}"</p>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                {/* Grid */}
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                                    {mediaList.map((media, idx) => (
+                                                        <div key={`${editionName}-${idx}`} onClick={() => {
+                                                            if (media.variant && productType === 'camisa') {
+                                                                if (media.variant.edition) setEdition(media.variant.edition);
+                                                                if (media.variant.model) setModel(media.variant.model);
+                                                                if (media.variant.color) setColor(media.variant.color);
+                                                                const parentProduct = products.find(p => p.variants && p.variants.some(v => v === media.variant));
+                                                                if (parentProduct) openDetailModal(parentProduct, media.variant, false);
+                                                            }
+                                                        }} className={`rounded-2xl overflow-hidden shadow-sm border bg-white cursor-pointer transition-all hover:shadow-md group ${media.variant?.model === model && media.variant?.color === color ? 'ring-2 ring-lilac-500 border-transparent' : 'border-lilac-100'}`}>
+                                                            <div className="relative aspect-[3/4] overflow-hidden">
+                                                                {media.type === 'video' ? (
+                                                                    <video src={media.src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" controls playsInline />
+                                                                ) : (
+                                                                    <img src={media.src} alt="Vista previa" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        );
+                                    });
+                                })()}
                                 {displayedMedia.length === 0 && (
                                     viewEdition === 'Personalizado' ? (
                                         <div className="col-span-full py-12 flex flex-col items-center justify-center text-center animate-fade-in">
